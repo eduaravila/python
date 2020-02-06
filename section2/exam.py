@@ -24,3 +24,4 @@ while True:
         elif userAnwser > randomnum or userAnwser < lastAnswer:
             print("Colder!")
     lastAnswer = int(userAnwser)
+
