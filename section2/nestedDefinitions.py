@@ -9,7 +9,16 @@ x = 10
 
 
 def private():
-    # ? enclosing function
+    # ? local
     x = 50
-    return x
 
+    def enclosedThing():
+        # ? enclosing function variable
+        return x
+    enclosedThing()
+
+
+def modifieGlobal():
+    global x  # * takes the global variable memory space & modify the orginal variable
+
+    x = "New value"
