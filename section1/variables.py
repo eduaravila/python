@@ -43,7 +43,7 @@ print("Some formating example called with keywords : {p} {s}".format(
 print("Some formating example called with keywords : {p:.<20} | {s:.>20}".format(
     p="#1 example", s="#2 example"))
 
-name = 'some f formating x2'
+name = 'some f for      mating x2'
 print(f"some f formating example {name}")
 
 decimal_f_formating = 10.121
