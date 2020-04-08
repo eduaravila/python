@@ -9,21 +9,20 @@ class Movements():
         super().__init__()
 
     def set_hand(self, cards):
-        print(cards)
         self.hand = [*self.hand, *cards]
 
     def get_points(self):
         if len(self.hand) > 0:
-            return functools.reduce(lambda sum, y: sum + int(y["value"]), self.hand, 0)
+            return functools.reduce(lambda sum, y: sum + int(y.value), self.hand, 0)
 
     def clear_hand(self):
         self.hand = []
 
     def get_hand(self, hide=-1):
         if hide >= 0:
-            return [f"{x[1]['rank']} of {x[1]['suit']} : {x[1]['value']}" if x[0] != hide else f"* * *" for x in enumerate(self.hand)]
+            return [f"{x[1].rank} of {x[1].suit} : {x[1].value}" if x[0] != hide else f"* * *" for x in enumerate(self.hand)]
         else:
-            return [f"{x['rank']} of {x['suit']} : {x['value']}" for x in self.hand]
+            return [f"{x.rank} of {x.suit} : {x.value}" for x in self.hand]
 
 
 class Player(Movements):
@@ -67,15 +66,31 @@ def make_deck(n):
     return val
 
 
+class Card():
+    def __init__(self, suit, rank, value):
+        super().__init__()
+        self.suit = suit
+        self.rank = rank
+        self.value = value
+
+    def __str__(self):
+        return f"{self.rank} of {self.suit}: {self.value}"
+
+
 class Deck():
     def __init__(self):
         super().__init__()
         cards = [x for x in list(map(make_deck, enumerate(deck.suits)))]
-        self.base = [x for card in cards for x in card]
-        self.cards = [x for card in cards for x in card]
+        self.base = [Card(rank=x["rank"], value=x["value"], suit=x["suit"])
+                     for card in cards for x in card]
+        self.cards = self.base
 
     def new_deck(self):
         self.cards = self.base
+
+    def __str__(self):
+        print(self)
+        return self.cards
 
     def shuffle_deck(self):
         random.shuffle(self.cards)
@@ -145,13 +160,13 @@ class Game():
     def give_card(self, deck, player):
         card = deck.giveCards(1)
         print(
-            f"The card is >>> {card[0]['rank']} of {card[0]['suit']} : {card[0]['value']}")
+            f"The card is >>> {card[0].rank} of {card[0].suit} : {card[0].value}")
         player.set_hand(card)
 
     def give_card_dealer(self, deck, dealer):
         card = deck.giveCards(1)
         print(
-            f"The card is >>> {card[0]['rank']} of {card[0]['suit']} : {card[0]['value']}")
+            f"The card is >>> {card[0].rank} of {card[0].suit} : {card[0].value}")
         dealer.set_hand(card)
 
     def can_continue(self, player):
