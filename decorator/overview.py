@@ -23,10 +23,12 @@ def example_decorator(func_need_decorator):
     return inside_func_decorator
 
 
+@example_decorator
 def hello():
     print("Hello world")
 
 
-funtion_with_decorator = example_decorator(hello)
+hello()
+# funtion_with_decorator = example_decorator(hello)
 
-funtion_with_decorator()
+# funtion_with_decorator()
